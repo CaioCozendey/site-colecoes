@@ -32,20 +32,6 @@ export const CATEGORY_ICONS: Record<string, string> = {
 
 export const categoryIcon = (c: string) => CATEGORY_ICONS[c] ?? "📦";
 
-export const CONDITION_SUGGESTIONS = [
-  "Novo / Lacrado",
-  "Excelente",
-  "Muito bom",
-  "Bom",
-  "Regular",
-  "Ruim",
-  "FC",
-  "SOB",
-  "MBC",
-  "BC",
-  "REG",
-];
-
 export const PRIORITY_LABEL: Record<Priority, string> = {
   low: "Baixa",
   medium: "Média",
@@ -135,3 +121,13 @@ export const errorMessage = (e: unknown) =>
     : typeof e === "object" && e && "message" in e
       ? String((e as { message: unknown }).message)
       : "Ocorreu um erro inesperado";
+
+export const CONDITION_SUGGESTIONS = [
+  "UTG",
+  "BC",
+  "MBC",
+  "MBC+",
+  "SOB",
+  "SOB+",
+  "FC/FE",
+];

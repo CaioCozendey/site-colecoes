@@ -204,8 +204,14 @@ export default function ItemForm() {
           </div>
           <div>
             <label className={labelCls}>Estado de conservação</label>
-            <input list="conditions" className={inputCls} placeholder="MBC, Excelente..." {...register("condition")} />
-            <datalist id="conditions">{CONDITION_SUGGESTIONS.map((c) => <option key={c} value={c} />)}</datalist>
+            <select className={inputCls} {...register("condition")}>
+              <option value="">Selecione...</option>
+              {CONDITION_SUGGESTIONS.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className={labelCls}>Quantidade</label>
