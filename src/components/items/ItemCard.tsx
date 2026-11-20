@@ -16,9 +16,39 @@ function useDisplayPrice() {
 
 const Thumb = ({ item, className }: { item: Item; className: string }) => {
   const img = primaryImage(item);
+
+  // Busca a segunda imagem pela ordem de cadastro
+  const secondImg = item.item_images
+    .filter((i) => i.id !== img?.id)
+    .sort((a, b) => a.sort_order - b.sort_order)[0];
+
   return (
-    <div className={`${className} bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden`}>
-      {img ? <img src={img.image_url} alt={item.name} className="w-full h-full object-cover" /> : <span className="text-5xl text-gray-400">🏺</span>}
+    <div
+      className={`${className} bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden relative`}
+    >
+      {img ? (
+        <>
+          {/* Primeira imagem */}
+          <img
+            src={img.image_url}
+            alt={item.name}
+            className={`w-full h-full object-cover transition-opacity duration-300 ${
+              secondImg ? "group-hover:opacity-0" : ""
+            }`}
+          />
+
+          {/* Segunda imagem */}
+          {secondImg && (
+            <img
+              src={secondImg.image_url}
+              alt={`${item.name} - segunda imagem`}
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+          )}
+        </>
+      ) : (
+        <span className="text-5xl text-gray-400">🏺</span>
+      )}
     </div>
   );
 };
@@ -31,7 +61,10 @@ const WishBadge = ({ item }: { item: Item }) =>
 export function ItemGridCard({ item }: { item: Item }) {
   const price = useDisplayPrice();
   return (
-    <Link to={`/items/${item.id}`} className={`${cardCls} overflow-hidden block transition-transform hover:scale-[1.03]`}>
+    <Link
+  to={`/items/${item.id}`}
+  className={`${cardCls} group overflow-hidden block transition-transform hover:scale-[1.03]`}
+>
       <div className="relative">
         <Thumb item={item} className="h-48" />
         <div className="absolute top-2 left-2"><WishBadge item={item} /></div>
